@@ -1,0 +1,1500 @@
+<!DOCTYPE html>
+<html lang="ko" class="scroll-smooth">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>비짓 나고야 | Visit Nagoya - 매력 넘치는 일본 중부의 심장</title>
+    <!-- Tailwind CSS CDN -->
+    <script src="https://cdn.tailwindcss.com"></script>
+    <script>
+        tailwind.config = {
+            theme: {
+                extend: {
+                    colors: {
+                        brand: {
+                            50: '#fdf4f4',
+                            100: '#fbe8e8',
+                            500: '#e11d48',
+                            600: '#be123c',
+                            700: '#9f1239',
+                            800: '#881337',
+                            gold: '#d97706',
+                            night: '#0f172a'
+                        }
+                    },
+                    fontFamily: {
+                        sans: ['Pretendard', 'Noto Sans KR', 'Inter', 'sans-serif'],
+                    }
+                }
+            }
+        }
+    </script>
+    <!-- Google Fonts -->
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=Noto+Sans+KR:wght@300;400;500;600;700;800&display=swap" rel="stylesheet">
+    <!-- Font Awesome Icons -->
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
+
+    <style>
+        body {
+            font-family: 'Noto Sans KR', sans-serif;
+            background-color: #f8fafc;
+            color: #1e293b;
+        }
+        .glass-card {
+            background: rgba(255, 255, 255, 0.92);
+            backdrop-filter: blur(12px);
+            border: 1px solid rgba(255, 255, 255, 0.6);
+        }
+        .glass-nav {
+            background: rgba(15, 23, 42, 0.85);
+            backdrop-filter: blur(16px);
+            border-bottom: 1px solid rgba(255, 255, 255, 0.1);
+        }
+        .hero-gradient {
+            background: linear-gradient(180deg, rgba(15, 23, 42, 0.45) 0%, rgba(15, 23, 42, 0.85) 100%);
+        }
+        /* Custom scrollbar */
+        ::-webkit-scrollbar {
+            width: 8px;
+        }
+        ::-webkit-scrollbar-track {
+            background: #f1f5f9;
+        }
+        ::-webkit-scrollbar-thumb {
+            background: #cbd5e1;
+            border-radius: 4px;
+        }
+        ::-webkit-scrollbar-thumb:hover {
+            background: #94a3b8;
+        }
+    </style>
+</head>
+<body class="antialiased min-h-screen flex flex-col">
+
+    <!-- Navigation Header -->
+    <header class="fixed top-0 left-0 right-0 z-50 transition-all duration-300 glass-nav text-white">
+        <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
+            <div class="flex items-center justify-between h-20">
+                <!-- Brand Logo -->
+                <a href="#" class="flex items-center gap-3 group">
+                    <div class="w-11 h-11 rounded-xl bg-gradient-to-tr from-rose-600 to-amber-500 flex items-center justify-center text-white text-xl shadow-lg shadow-rose-900/30 group-hover:scale-105 transition-transform">
+                        <i class="fa-solid fa-torii-gate"></i>
+                    </div>
+                    <div>
+                        <div class="font-extrabold text-xl tracking-tight leading-none text-white">
+                            VISIT <span class="text-rose-400">NAGOYA</span>
+                        </div>
+                        <span class="text-xs text-slate-300 font-light tracking-wider">나고야 여행 완전정복</span>
+                    </div>
+                </a>
+
+                <!-- Desktop Menu -->
+                <nav class="hidden md:flex items-center gap-8 text-sm font-medium">
+                    <a href="#attractions" class="text-slate-200 hover:text-rose-400 transition-colors">주요 명소</a>
+                    <a href="#gourmet" class="text-slate-200 hover:text-rose-400 transition-colors">나고야 메시(미식)</a>
+                    <a href="#itinerary" class="text-slate-200 hover:text-rose-400 transition-colors">추천 일정</a>
+                    <a href="#traffic" class="text-slate-200 hover:text-rose-400 transition-colors">교통 & 팁</a>
+                    <a href="#calculator" class="text-slate-200 hover:text-rose-400 transition-colors">예산 계산기</a>
+                </nav>
+
+                <!-- Action Button & Wishlist Trigger -->
+                <div class="hidden sm:flex items-center gap-3">
+                    <button onclick="openWishlistModal()" class="relative p-2.5 rounded-full bg-slate-800/80 hover:bg-slate-700 text-slate-200 hover:text-rose-400 transition-all border border-slate-700/60" title="내 저장 목록">
+                        <i class="fa-solid fa-heart text-lg"></i>
+                        <span id="wishlist-badge" class="absolute -top-1 -right-1 bg-rose-500 text-white text-[10px] font-bold w-5 h-5 rounded-full flex items-center justify-center shadow-md">0</span>
+                    </button>
+                    <a href="#itinerary" class="px-5 py-2.5 rounded-xl bg-rose-600 hover:bg-rose-500 text-white font-semibold text-sm shadow-md shadow-rose-600/30 transition-all transform hover:-translate-y-0.5">
+                        여행 플래너 시작
+                    </a>
+                </div>
+
+                <!-- Mobile Menu Button -->
+                <div class="flex items-center gap-2 md:hidden">
+                    <button onclick="openWishlistModal()" class="relative p-2 rounded-lg bg-slate-800 text-slate-200">
+                        <i class="fa-solid fa-heart"></i>
+                        <span id="wishlist-badge-mobile" class="absolute -top-1 -right-1 bg-rose-500 text-white text-[9px] w-4 h-4 rounded-full flex items-center justify-center">0</span>
+                    </button>
+                    <button id="mobile-toggle" onclick="toggleMobileMenu()" class="p-2.5 rounded-xl text-slate-300 hover:text-white bg-slate-800/80 focus:outline-none">
+                        <i class="fa-solid fa-bars text-xl" id="menu-icon"></i>
+                    </button>
+                </div>
+            </div>
+        </div>
+
+        <!-- Mobile Drawer -->
+        <div id="mobile-menu" class="hidden md:hidden bg-slate-900/95 border-t border-slate-800 px-4 pt-3 pb-6 space-y-3">
+            <a href="#attractions" onclick="toggleMobileMenu()" class="block py-2.5 text-slate-200 hover:text-rose-400 border-b border-slate-800/60 font-medium">주요 명소</a>
+            <a href="#gourmet" onclick="toggleMobileMenu()" class="block py-2.5 text-slate-200 hover:text-rose-400 border-b border-slate-800/60 font-medium">나고야 메시(미식)</a>
+            <a href="#itinerary" onclick="toggleMobileMenu()" class="block py-2.5 text-slate-200 hover:text-rose-400 border-b border-slate-800/60 font-medium">추천 일정</a>
+            <a href="#traffic" onclick="toggleMobileMenu()" class="block py-2.5 text-slate-200 hover:text-rose-400 border-b border-slate-800/60 font-medium">교통 & 팁</a>
+            <a href="#calculator" onclick="toggleMobileMenu()" class="block py-2.5 text-slate-200 hover:text-rose-400 font-medium">예산 계산기</a>
+        </div>
+    </header>
+
+    <!-- Hero Section -->
+    <section class="relative min-h-[90vh] flex items-center justify-center pt-24 pb-16 overflow-hidden bg-slate-950">
+        <!-- Background Image with Overlay -->
+        <div class="absolute inset-0 z-0">
+            <img src="https://images.unsplash.com/photo-1542051841857-5f90071e7989?auto=format&fit=crop&w=1920&q=80" 
+                 onerror="this.src='https://placehold.co/1920x1080/1e293b/ffffff?text=Nagoya+City'"
+                 alt="Nagoya Castle and skyline" 
+                 class="w-full h-full object-cover object-center opacity-40 scale-105 transition-transform duration-1000">
+            <div class="absolute inset-0 hero-gradient"></div>
+        </div>
+
+        <div class="relative z-10 max-w-5xl mx-auto px-4 sm:px-6 lg:px-8 text-center mt-6">
+            <div class="inline-flex items-center gap-2 px-4 py-1.5 rounded-full bg-rose-500/20 border border-rose-500/40 text-rose-300 text-xs sm:text-sm font-semibold mb-6 animate-pulse">
+                <i class="fa-solid fa-sparkles"></i> 2026 트렌디 가이드 & 지브리 파크 완벽 공략
+            </div>
+            <h1 class="text-4xl sm:text-6xl lg:text-7xl font-extrabold text-white tracking-tight leading-tight sm:leading-none mb-6">
+                황금빛 샤치호코의 도시,<br>
+                <span class="bg-clip-text text-transparent bg-gradient-to-r from-amber-400 via-rose-400 to-red-500">
+                    매혹적인 나고야(Nagoya)
+                </span>
+            </h1>
+            <p class="text-base sm:text-xl text-slate-300 max-w-2xl mx-auto mb-10 font-normal leading-relaxed">
+                찬란한 전국시대의 역사부터 감성 가득한 지브리 파크, 그리고 독보적인 풍미의 '나고야 메시' 미식 탐방까지. 당신만의 특별한 여행을 지금 계획해보세요.
+            </p>
+
+            <!-- Quick Filter & Call To Action Buttons -->
+            <div class="flex flex-wrap items-center justify-center gap-4">
+                <a href="#attractions" class="w-full sm:w-auto px-8 py-4 rounded-2xl bg-gradient-to-r from-rose-600 to-rose-700 hover:from-rose-500 hover:to-rose-600 text-white font-bold text-base shadow-xl shadow-rose-900/40 transition-all flex items-center justify-center gap-2">
+                    <i class="fa-solid fa-compass"></i> 명소 둘러보기
+                </a>
+                <a href="#gourmet" class="w-full sm:w-auto px-8 py-4 rounded-2xl bg-white/10 hover:bg-white/20 backdrop-blur-md text-white border border-white/20 font-bold text-base transition-all flex items-center justify-center gap-2">
+                    <i class="fa-solid fa-utensils text-amber-400"></i> 대표 미식 탐방
+                </a>
+            </div>
+
+            <!-- Quick Information Strip -->
+            <div class="grid grid-cols-2 md:grid-cols-4 gap-3 sm:gap-4 mt-14 max-w-4xl mx-auto">
+                <div class="p-4 rounded-2xl bg-slate-900/60 backdrop-blur-md border border-slate-700/60 text-left">
+                    <div class="text-xs text-slate-400 mb-1 flex items-center gap-1.5"><i class="fa-solid fa-plane-arrival text-rose-400"></i> 인천-나고야</div>
+                    <div class="text-base sm:text-lg font-bold text-white">직항 약 1시간 50분</div>
+                </div>
+                <div class="p-4 rounded-2xl bg-slate-900/60 backdrop-blur-md border border-slate-700/60 text-left">
+                    <div class="text-xs text-slate-400 mb-1 flex items-center gap-1.5"><i class="fa-solid fa-train text-amber-400"></i> 공항 ↔ 시내</div>
+                    <div class="text-base sm:text-lg font-bold text-white">뮤스카이 28분</div>
+                </div>
+                <div class="p-4 rounded-2xl bg-slate-900/60 backdrop-blur-md border border-slate-700/60 text-left">
+                    <div class="text-xs text-slate-400 mb-1 flex items-center gap-1.5"><i class="fa-solid fa-ticket text-emerald-400"></i> 지브리 파크</div>
+                    <div class="text-base sm:text-lg font-bold text-white">100% 사전 예약제</div>
+                </div>
+                <div class="p-4 rounded-2xl bg-slate-900/60 backdrop-blur-md border border-slate-700/60 text-left">
+                    <div class="text-xs text-slate-400 mb-1 flex items-center gap-1.5"><i class="fa-solid fa-temperature-half text-sky-400"></i> 추천 여행 시기</div>
+                    <div class="text-base sm:text-lg font-bold text-white">봄 (3~5월) / 가을</div>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <!-- Attractions Section -->
+    <section id="attractions" class="py-20 bg-slate-50">
+        <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
+            <div class="flex flex-col md:flex-row md:items-end justify-between mb-12 gap-4">
+                <div>
+                    <span class="text-rose-600 font-bold text-sm tracking-wider uppercase">Must-Visit Spots</span>
+                    <h2 class="text-3xl sm:text-4xl font-extrabold text-slate-900 mt-1">나고야 핵심 명소 BEST 6</h2>
+                    <p class="text-slate-600 mt-2 text-base">역사와 미래, 애니메이션 감성이 한곳에 어우러진 필수 스팟들입니다.</p>
+                </div>
+                <!-- Category Filter Buttons -->
+                <div class="flex flex-wrap gap-2" id="spot-filter-container">
+                    <button onclick="filterSpots('all')" class="spot-filter-btn px-4 py-2 rounded-xl text-xs sm:text-sm font-semibold bg-rose-600 text-white shadow-sm transition-all" data-cat="all">전체</button>
+                    <button onclick="filterSpots('landmark')" class="spot-filter-btn px-4 py-2 rounded-xl text-xs sm:text-sm font-semibold bg-white text-slate-700 border border-slate-200 hover:bg-slate-100 transition-all" data-cat="landmark">랜드마크/역사</button>
+                    <button onclick="filterSpots('theme')" class="spot-filter-btn px-4 py-2 rounded-xl text-xs sm:text-sm font-semibold bg-white text-slate-700 border border-slate-200 hover:bg-slate-100 transition-all" data-cat="theme">테마파크/문화</button>
+                    <button onclick="filterSpots('shopping')" class="spot-filter-btn px-4 py-2 rounded-xl text-xs sm:text-sm font-semibold bg-white text-slate-700 border border-slate-200 hover:bg-slate-100 transition-all" data-cat="shopping">쇼핑/도심</button>
+                </div>
+            </div>
+
+            <!-- Attractions Grid -->
+            <div class="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-8" id="spots-grid">
+                <!-- Spot 1: Nagoya Castle -->
+                <div class="spot-card bg-white rounded-3xl overflow-hidden border border-slate-200/80 shadow-sm hover:shadow-xl transition-all duration-300 flex flex-col group" data-category="landmark">
+                    <div class="relative h-60 overflow-hidden">
+                        <img src="https://images.unsplash.com/photo-1590253230537-83d735070ec9?auto=format&fit=crop&w=800&q=80" 
+                             onerror="this.src='https://placehold.co/600x400/e2e8f0/475569?text=Nagoya+Castle'" 
+                             alt="나고야성" 
+                             class="w-full h-full object-cover group-hover:scale-105 transition-transform duration-500">
+                        <span class="absolute top-4 left-4 bg-slate-900/80 backdrop-blur-md text-amber-300 text-xs font-bold px-3 py-1.5 rounded-full border border-amber-400/30">
+                            <i class="fa-solid fa-crown text-xs mr-1"></i> 대표 랜드마크
+                        </span>
+                        <button onclick="toggleWishlist('spot_nagoya_castle', '나고야성 (혼마루 어전)', 'landmark')" class="wishlist-btn absolute top-4 right-4 w-9 h-9 rounded-full bg-white/90 backdrop-blur-sm text-slate-600 hover:text-rose-500 flex items-center justify-center shadow-md transition-colors" data-id="spot_nagoya_castle">
+                            <i class="fa-regular fa-heart"></i>
+                        </button>
+                    </div>
+                    <div class="p-6 flex-1 flex flex-col justify-between">
+                        <div>
+                            <div class="flex items-center justify-between text-xs text-slate-500 mb-2">
+                                <span><i class="fa-solid fa-location-dot text-rose-500 mr-1"></i> 메이조코엔역 도보 5분</span>
+                                <span class="text-amber-600 font-medium">입장료: 500엔</span>
+                            </div>
+                            <h3 class="text-xl font-bold text-slate-900 group-hover:text-rose-600 transition-colors mb-2">나고야성 & 혼마루 어전</h3>
+                            <p class="text-slate-600 text-sm leading-relaxed mb-4">
+                                황금 샤치호코로 유명한 도쿠가와 이에야스의 거성. 복원된 호화찬란한 전통 목조 건축 '혼마루 어전'은 장인의 금박 회화가 압도적입니다.
+                            </p>
+                        </div>
+                        <div class="pt-4 border-t border-slate-100 flex items-center justify-between text-xs text-slate-500">
+                            <span class="font-medium text-slate-700"><i class="fa-regular fa-clock mr-1 text-slate-400"></i> 소요시간 약 2~3시간</span>
+                            <button onclick="openDetailModal('castle')" class="text-rose-600 font-semibold hover:underline flex items-center gap-1">
+                                상세 보기 <i class="fa-solid fa-arrow-right text-[10px]"></i>
+                            </button>
+                        </div>
+                    </div>
+                </div>
+
+                <!-- Spot 2: Ghibli Park -->
+                <div class="spot-card bg-white rounded-3xl overflow-hidden border border-slate-200/80 shadow-sm hover:shadow-xl transition-all duration-300 flex flex-col group" data-category="theme">
+                    <div class="relative h-60 overflow-hidden">
+                        <img src="https://images.unsplash.com/photo-1578632767115-351597cf2477?auto=format&fit=crop&w=800&q=80" 
+                             onerror="this.src='https://placehold.co/600x400/e2e8f0/475569?text=Ghibli+Park'" 
+                             alt="지브리 파크" 
+                             class="w-full h-full object-cover group-hover:scale-105 transition-transform duration-500">
+                        <span class="absolute top-4 left-4 bg-emerald-900/85 backdrop-blur-md text-emerald-200 text-xs font-bold px-3 py-1.5 rounded-full border border-emerald-400/30">
+                            <i class="fa-solid fa-sparkles mr-1"></i> 핫플레이스
+                        </span>
+                        <button onclick="toggleWishlist('spot_ghibli_park', '지브리 파크 (Ghibli Park)', 'theme')" class="wishlist-btn absolute top-4 right-4 w-9 h-9 rounded-full bg-white/90 backdrop-blur-sm text-slate-600 hover:text-rose-500 flex items-center justify-center shadow-md transition-colors" data-id="spot_ghibli_park">
+                            <i class="fa-regular fa-heart"></i>
+                        </button>
+                    </div>
+                    <div class="p-6 flex-1 flex flex-col justify-between">
+                        <div>
+                            <div class="flex items-center justify-between text-xs text-slate-500 mb-2">
+                                <span><i class="fa-solid fa-location-dot text-rose-500 mr-1"></i> 아이치구 기념공원역</span>
+                                <span class="text-rose-600 font-semibold">사전 예약 필수</span>
+                            </div>
+                            <h3 class="text-xl font-bold text-slate-900 group-hover:text-rose-600 transition-colors mb-2">지브리 파크 (Ghibli Park)</h3>
+                            <p class="text-slate-600 text-sm leading-relaxed mb-4">
+                                미야자키 하야오의 환상 세계를 자연 그대로 구현한 감성 테마파크. 지브리 대창고, 마녀의 계곡, 모노노케 마을 등 동화 속 세계가 펼쳐집니다.
+                            </p>
+                        </div>
+                        <div class="pt-4 border-t border-slate-100 flex items-center justify-between text-xs text-slate-500">
+                            <span class="font-medium text-slate-700"><i class="fa-regular fa-clock mr-1 text-slate-400"></i> 반일~하루 일정 추천</span>
+                            <button onclick="openDetailModal('ghibli')" class="text-rose-600 font-semibold hover:underline flex items-center gap-1">
+                                상세 보기 <i class="fa-solid fa-arrow-right text-[10px]"></i>
+                            </button>
+                        </div>
+                    </div>
+                </div>
+
+                <!-- Spot 3: Oasis 21 & Mirai Tower -->
+                <div class="spot-card bg-white rounded-3xl overflow-hidden border border-slate-200/80 shadow-sm hover:shadow-xl transition-all duration-300 flex flex-col group" data-category="shopping">
+                    <div class="relative h-60 overflow-hidden">
+                        <img src="https://images.unsplash.com/photo-1503899036084-c55cdd92da26?auto=format&fit=crop&w=800&q=80" 
+                             onerror="this.src='https://placehold.co/600x400/e2e8f0/475569?text=Oasis+21'" 
+                             alt="오아시스 21" 
+                             class="w-full h-full object-cover group-hover:scale-105 transition-transform duration-500">
+                        <span class="absolute top-4 left-4 bg-indigo-900/85 backdrop-blur-md text-indigo-200 text-xs font-bold px-3 py-1.5 rounded-full border border-indigo-400/30">
+                            <i class="fa-solid fa-moon mr-1"></i> 환상적인 야경
+                        </span>
+                        <button onclick="toggleWishlist('spot_oasis21', '오아시스 21 & 미라이 타워', 'shopping')" class="wishlist-btn absolute top-4 right-4 w-9 h-9 rounded-full bg-white/90 backdrop-blur-sm text-slate-600 hover:text-rose-500 flex items-center justify-center shadow-md transition-colors" data-id="spot_oasis21">
+                            <i class="fa-regular fa-heart"></i>
+                        </button>
+                    </div>
+                    <div class="p-6 flex-1 flex flex-col justify-between">
+                        <div>
+                            <div class="flex items-center justify-between text-xs text-slate-500 mb-2">
+                                <span><i class="fa-solid fa-location-dot text-rose-500 mr-1"></i> 사카에역 직접 연결</span>
+                                <span class="text-emerald-600 font-medium">물 우주선 무료 관람</span>
+                            </div>
+                            <h3 class="text-xl font-bold text-slate-900 group-hover:text-rose-600 transition-colors mb-2">오아시스 21 & 미라이 타워</h3>
+                            <p class="text-slate-600 text-sm leading-relaxed mb-4">
+                                거대한 유리 지붕 위로 물이 흐르는 '물의 우주선' 전망대. 밤이 되면 주부전력 미라이 타워와 어우러지는 환상적인 미래지향적 야경 명소입니다.
+                            </p>
+                        </div>
+                        <div class="pt-4 border-t border-slate-100 flex items-center justify-between text-xs text-slate-500">
+                            <span class="font-medium text-slate-700"><i class="fa-regular fa-clock mr-1 text-slate-400"></i> 일몰 후 방문 추천</span>
+                            <button onclick="openDetailModal('oasis21')" class="text-rose-600 font-semibold hover:underline flex items-center gap-1">
+                                상세 보기 <i class="fa-solid fa-arrow-right text-[10px]"></i>
+                            </button>
+                        </div>
+                    </div>
+                </div>
+
+                <!-- Spot 4: Atsuta Jingu -->
+                <div class="spot-card bg-white rounded-3xl overflow-hidden border border-slate-200/80 shadow-sm hover:shadow-xl transition-all duration-300 flex flex-col group" data-category="landmark">
+                    <div class="relative h-60 overflow-hidden">
+                        <img src="https://images.unsplash.com/photo-1528164344705-475426879c0d?auto=format&fit=crop&w=800&q=80" 
+                             onerror="this.src='https://placehold.co/600x400/e2e8f0/475569?text=Atsuta+Shrine'" 
+                             alt="아쓰타 신궁" 
+                             class="w-full h-full object-cover group-hover:scale-105 transition-transform duration-500">
+                        <span class="absolute top-4 left-4 bg-slate-900/80 backdrop-blur-md text-amber-200 text-xs font-bold px-3 py-1.5 rounded-full">
+                            <i class="fa-solid fa-tree mr-1"></i> 일본 3대 신궁
+                        </span>
+                        <button onclick="toggleWishlist('spot_atsuta', '아쓰타 신궁 (열전신궁)', 'landmark')" class="wishlist-btn absolute top-4 right-4 w-9 h-9 rounded-full bg-white/90 backdrop-blur-sm text-slate-600 hover:text-rose-500 flex items-center justify-center shadow-md transition-colors" data-id="spot_atsuta">
+                            <i class="fa-regular fa-heart"></i>
+                        </button>
+                    </div>
+                    <div class="p-6 flex-1 flex flex-col justify-between">
+                        <div>
+                            <div class="flex items-center justify-between text-xs text-slate-500 mb-2">
+                                <span><i class="fa-solid fa-location-dot text-rose-500 mr-1"></i> 진구마에역 도보 3분</span>
+                                <span class="text-emerald-600 font-medium">입장료 무료</span>
+                            </div>
+                            <h3 class="text-xl font-bold text-slate-900 group-hover:text-rose-600 transition-colors mb-2">아쓰타 신궁 (Atsuta Jingu)</h3>
+                            <p class="text-slate-600 text-sm leading-relaxed mb-4">
+                                일본 삼종신기 중 하나인 쿠사나기의 검을 모신 유서 깊은 신사. 울창한 삼나무 숲길 산책과 신궁 내 유명 키시멘 맛집은 놓칠 수 없는 코스입니다.
+                            </p>
+                        </div>
+                        <div class="pt-4 border-t border-slate-100 flex items-center justify-between text-xs text-slate-500">
+                            <span class="font-medium text-slate-700"><i class="fa-regular fa-clock mr-1 text-slate-400"></i> 소요시간 약 1.5시간</span>
+                            <button onclick="openDetailModal('atsuta')" class="text-rose-600 font-semibold hover:underline flex items-center gap-1">
+                                상세 보기 <i class="fa-solid fa-arrow-right text-[10px]"></i>
+                            </button>
+                        </div>
+                    </div>
+                </div>
+
+                <!-- Spot 5: Osu Shopping District & Temple -->
+                <div class="spot-card bg-white rounded-3xl overflow-hidden border border-slate-200/80 shadow-sm hover:shadow-xl transition-all duration-300 flex flex-col group" data-category="shopping">
+                    <div class="relative h-60 overflow-hidden">
+                        <img src="https://images.unsplash.com/photo-1555396273-367ea4eb4db5?auto=format&fit=crop&w=800&q=80" 
+                             onerror="this.src='https://placehold.co/600x400/e2e8f0/475569?text=Osu+District'" 
+                             alt="오스 상점가" 
+                             class="w-full h-full object-cover group-hover:scale-105 transition-transform duration-500">
+                        <span class="absolute top-4 left-4 bg-rose-900/85 backdrop-blur-md text-rose-200 text-xs font-bold px-3 py-1.5 rounded-full">
+                            <i class="fa-solid fa-store mr-1"></i> 먹거리 & 빈티지
+                        </span>
+                        <button onclick="toggleWishlist('spot_osu', '오스 상점가 & 오스칸논', 'shopping')" class="wishlist-btn absolute top-4 right-4 w-9 h-9 rounded-full bg-white/90 backdrop-blur-sm text-slate-600 hover:text-rose-500 flex items-center justify-center shadow-md transition-colors" data-id="spot_osu">
+                            <i class="fa-regular fa-heart"></i>
+                        </button>
+                    </div>
+                    <div class="p-6 flex-1 flex flex-col justify-between">
+                        <div>
+                            <div class="flex items-center justify-between text-xs text-slate-500 mb-2">
+                                <span><i class="fa-solid fa-location-dot text-rose-500 mr-1"></i> 오스칸논역 / 가미마에즈역</span>
+                                <span class="text-indigo-600 font-medium">길거리 음식 천국</span>
+                            </div>
+                            <h3 class="text-xl font-bold text-slate-900 group-hover:text-rose-600 transition-colors mb-2">오스 상점가 & 오스칸논</h3>
+                            <p class="text-slate-600 text-sm leading-relaxed mb-4">
+                                1,200여 개 점포가 밀집된 아케이드 거리. 오래된 전통 사찰 오스칸논과 서브컬처, 빈티지 의류숍, 다양한 길거리 간식이 조화를 이룹니다.
+                            </p>
+                        </div>
+                        <div class="pt-4 border-t border-slate-100 flex items-center justify-between text-xs text-slate-500">
+                            <span class="font-medium text-slate-700"><i class="fa-regular fa-clock mr-1 text-slate-400"></i> 소요시간 약 2~3시간</span>
+                            <button onclick="openDetailModal('osu')" class="text-rose-600 font-semibold hover:underline flex items-center gap-1">
+                                상세 보기 <i class="fa-solid fa-arrow-right text-[10px]"></i>
+                            </button>
+                        </div>
+                    </div>
+                </div>
+
+                <!-- Spot 6: Toyota Commemorative Museum -->
+                <div class="spot-card bg-white rounded-3xl overflow-hidden border border-slate-200/80 shadow-sm hover:shadow-xl transition-all duration-300 flex flex-col group" data-category="theme">
+                    <div class="relative h-60 overflow-hidden">
+                        <img src="https://images.unsplash.com/photo-1552519507-da3b142c6e3d?auto=format&fit=crop&w=800&q=80" 
+                             onerror="this.src='https://placehold.co/600x400/e2e8f0/475569?text=Toyota+Museum'" 
+                             alt="도요타 산업기술 기념관" 
+                             class="w-full h-full object-cover group-hover:scale-105 transition-transform duration-500">
+                        <span class="absolute top-4 left-4 bg-amber-900/85 backdrop-blur-md text-amber-200 text-xs font-bold px-3 py-1.5 rounded-full">
+                            <i class="fa-solid fa-gears mr-1"></i> 기술과 혁신
+                        </span>
+                        <button onclick="toggleWishlist('spot_toyota', '도요타 산업기술 기념관', 'theme')" class="wishlist-btn absolute top-4 right-4 w-9 h-9 rounded-full bg-white/90 backdrop-blur-sm text-slate-600 hover:text-rose-500 flex items-center justify-center shadow-md transition-colors" data-id="spot_toyota">
+                            <i class="fa-regular fa-heart"></i>
+                        </button>
+                    </div>
+                    <div class="p-6 flex-1 flex flex-col justify-between">
+                        <div>
+                            <div class="flex items-center justify-between text-xs text-slate-500 mb-2">
+                                <span><i class="fa-solid fa-location-dot text-rose-500 mr-1"></i> 사코역 도보 3분</span>
+                                <span class="text-amber-600 font-medium">입장료: 500엔</span>
+                            </div>
+                            <h3 class="text-xl font-bold text-slate-900 group-hover:text-rose-600 transition-colors mb-2">도요타 산업기술 기념관</h3>
+                            <p class="text-slate-600 text-sm leading-relaxed mb-4">
+                                방직기 공장에서 세계적 자동차 기업으로 거듭난 토요타의 발자취. 살아 움직이는 거대한 기계 시연과 자동차 제조 공정은 성인과 아이 모두 매료됩니다.
+                            </p>
+                        </div>
+                        <div class="pt-4 border-t border-slate-100 flex items-center justify-between text-xs text-slate-500">
+                            <span class="font-medium text-slate-700"><i class="fa-regular fa-clock mr-1 text-slate-400"></i> 소요시간 약 2시간</span>
+                            <button onclick="openDetailModal('toyota')" class="text-rose-600 font-semibold hover:underline flex items-center gap-1">
+                                상세 보기 <i class="fa-solid fa-arrow-right text-[10px]"></i>
+                            </button>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <!-- Nagoya Meshi (Gourmet) Section -->
+    <section id="gourmet" class="py-20 bg-slate-900 text-white relative overflow-hidden">
+        <!-- Accent circles -->
+        <div class="absolute -top-40 -right-40 w-96 h-96 rounded-full bg-rose-600/10 filter blur-3xl pointer-events-none"></div>
+        <div class="absolute -bottom-40 -left-40 w-96 h-96 rounded-full bg-amber-500/10 filter blur-3xl pointer-events-none"></div>
+
+        <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 relative z-10">
+            <div class="text-center max-w-3xl mx-auto mb-16">
+                <span class="text-amber-400 font-bold text-sm tracking-wider uppercase">Culinary Heritage</span>
+                <h2 class="text-3xl sm:text-5xl font-extrabold text-white mt-2">나고야 메시 (Nagoya Meshi)</h2>
+                <p class="text-slate-400 mt-4 text-base sm:text-lg">
+                    붉은 된장(핫초미소)과 진한 육수, 독특한 식문화로 발전한 나고야만의 소울푸드를 만나보세요.
+                </p>
+            </div>
+
+            <!-- Gourmet Cards Grid -->
+            <div class="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-6">
+                <!-- Food 1: Hitsumabushi -->
+                <div class="bg-slate-800/80 border border-slate-700/60 rounded-3xl p-6 hover:border-amber-400/50 transition-all duration-300 flex flex-col justify-between">
+                    <div>
+                        <div class="flex items-center justify-between mb-4">
+                            <span class="px-3 py-1 rounded-full text-xs font-bold bg-amber-500/20 text-amber-300 border border-amber-500/30">
+                                3가지 방식으로 먹는 장어덮밥
+                            </span>
+                            <button onclick="toggleWishlist('food_hitsumabushi', '히츠마부시 (장어덮밥)', 'gourmet')" class="wishlist-btn text-slate-400 hover:text-rose-400 transition-colors" data-id="food_hitsumabushi">
+                                <i class="fa-regular fa-heart text-lg"></i>
+                            </button>
+                        </div>
+                        <h3 class="text-2xl font-extrabold text-white mb-2">히츠마부시 (ひつまぶし)</h3>
+                        <p class="text-slate-300 text-sm leading-relaxed mb-4">
+                            참숯에 겉은 바삭하고 속은 부드럽게 구워낸 장어를 나무 밥통에 담아냅니다. 4등분하여 1) 본연의 맛, 2) 파·와사비·김가루를 얹어, 3) 오차즈케 육수를 부어 먹는 3단 별미입니다.
+                        </p>
+                        <div class="bg-slate-900/60 rounded-xl p-3 mb-4 text-xs text-slate-300 space-y-1">
+                            <div><strong class="text-amber-300">대표 명가:</strong> 호라이켄(蓬莱軒), 이바쇼(いば昇), 빈쵸(備長)</div>
+                            <div><strong class="text-amber-300">평균 가격대:</strong> 3,800엔 ~ 5,500엔</div>
+                        </div>
+                    </div>
+                    <button onclick="showFoodTip('hitsumabushi')" class="w-full py-2.5 rounded-xl bg-amber-500 hover:bg-amber-400 text-slate-950 font-bold text-sm transition-all flex items-center justify-center gap-2">
+                        <i class="fa-solid fa-utensils"></i> 맛있게 먹는 법 보기
+                    </button>
+                </div>
+
+                <!-- Food 2: Miso Katsu -->
+                <div class="bg-slate-800/80 border border-slate-700/60 rounded-3xl p-6 hover:border-amber-400/50 transition-all duration-300 flex flex-col justify-between">
+                    <div>
+                        <div class="flex items-center justify-between mb-4">
+                            <span class="px-3 py-1 rounded-full text-xs font-bold bg-rose-500/20 text-rose-300 border border-rose-500/30">
+                                붉은 된장 소스의 돈카츠
+                            </span>
+                            <button onclick="toggleWishlist('food_misokatsu', '미소카츠 (야바톤 등)', 'gourmet')" class="wishlist-btn text-slate-400 hover:text-rose-400 transition-colors" data-id="food_misokatsu">
+                                <i class="fa-regular fa-heart text-lg"></i>
+                            </button>
+                        </div>
+                        <h3 class="text-2xl font-extrabold text-white mb-2">미소카츠 (みそかつ)</h3>
+                        <p class="text-slate-300 text-sm leading-relaxed mb-4">
+                            바삭하게 튀긴 두툼한 돈카츠 위에 달콤 짭조름하고 깊은 풍미를 가진 핫초미소 특제 소스를 듬뿍 얹어 먹는 나고야 소울푸드입니다.
+                        </p>
+                        <div class="bg-slate-900/60 rounded-xl p-3 mb-4 text-xs text-slate-300 space-y-1">
+                            <div><strong class="text-amber-300">대표 명가:</strong> 야바톤(矢場とん), 라무치이(らむちぃ)</div>
+                            <div><strong class="text-amber-300">평균 가격대:</strong> 1,300엔 ~ 2,200엔</div>
+                        </div>
+                    </div>
+                    <button onclick="showFoodTip('misokatsu')" class="w-full py-2.5 rounded-xl bg-amber-500 hover:bg-amber-400 text-slate-950 font-bold text-sm transition-all flex items-center justify-center gap-2">
+                        <i class="fa-solid fa-utensils"></i> 특징 & 꿀조합 보기
+                    </button>
+                </div>
+
+                <!-- Food 3: Tebasaki -->
+                <div class="bg-slate-800/80 border border-slate-700/60 rounded-3xl p-6 hover:border-amber-400/50 transition-all duration-300 flex flex-col justify-between">
+                    <div>
+                        <div class="flex items-center justify-between mb-4">
+                            <span class="px-3 py-1 rounded-full text-xs font-bold bg-amber-500/20 text-amber-300 border border-amber-500/30">
+                                맥주를 부르는 중독성
+                            </span>
+                            <button onclick="toggleWishlist('food_tebasaki', '테바사키 (닭날개 튀김)', 'gourmet')" class="wishlist-btn text-slate-400 hover:text-rose-400 transition-colors" data-id="food_tebasaki">
+                                <i class="fa-regular fa-heart text-lg"></i>
+                            </button>
+                        </div>
+                        <h3 class="text-2xl font-extrabold text-white mb-2">테바사키 (手羽先)</h3>
+                        <p class="text-slate-300 text-sm leading-relaxed mb-4">
+                            튀김옷 없이 바삭하게 튀긴 닭날개에 특제 간장 양념과 알싸한 후추를 듬뿍 뿌린 안주 요리. 한 입 베어물면 뼈만 쏙 빠지는 기술이 일품입니다.
+                        </p>
+                        <div class="bg-slate-900/60 rounded-xl p-3 mb-4 text-xs text-slate-300 space-y-1">
+                            <div><strong class="text-amber-300">대표 명가:</strong> 세카이노 야마짱(世界の山ちゃん), 후라이보(風来坊)</div>
+                            <div><strong class="text-amber-300">평균 가격대:</strong> 1인분 (5개) 약 550엔 ~ 650엔</div>
+                        </div>
+                    </div>
+                    <button onclick="showFoodTip('tebasaki')" class="w-full py-2.5 rounded-xl bg-amber-500 hover:bg-amber-400 text-slate-950 font-bold text-sm transition-all flex items-center justify-center gap-2">
+                        <i class="fa-solid fa-utensils"></i> 뼈 바르는 팁 보기
+                    </button>
+                </div>
+
+                <!-- Food 4: Ogura Toast -->
+                <div class="bg-slate-800/80 border border-slate-700/60 rounded-3xl p-6 hover:border-amber-400/50 transition-all duration-300 flex flex-col justify-between">
+                    <div>
+                        <div class="flex items-center justify-between mb-4">
+                            <span class="px-3 py-1 rounded-full text-xs font-bold bg-sky-500/20 text-sky-300 border border-sky-500/30">
+                                나고야 모닝 카페 문화
+                            </span>
+                            <button onclick="toggleWishlist('food_oguratoast', '오구라 토스트 (나고야 모닝)', 'gourmet')" class="wishlist-btn text-slate-400 hover:text-rose-400 transition-colors" data-id="food_oguratoast">
+                                <i class="fa-regular fa-heart text-lg"></i>
+                            </button>
+                        </div>
+                        <h3 class="text-2xl font-extrabold text-white mb-2">오구라 토스트 (小倉トースト)</h3>
+                        <p class="text-slate-300 text-sm leading-relaxed mb-4">
+                            노릇하게 구운 두툼한 식빵에 버터와 달콤한 단팥 앙금을 얹은 클래식 디저트. 아침 커피 한 잔을 주문하면 토스트와 계란이 무료로 나오는 '모닝 서비스'의 상징!
+                        </p>
+                        <div class="bg-slate-900/60 rounded-xl p-3 mb-4 text-xs text-slate-300 space-y-1">
+                            <div><strong class="text-amber-300">대표 명가:</strong> 코메다 커피 본점, 키사텐 부초(BUCHO Coffee)</div>
+                            <div><strong class="text-amber-300">모닝 타임:</strong> 오전 7시 ~ 11시 전후</div>
+                        </div>
+                    </div>
+                    <button onclick="showFoodTip('ogura')" class="w-full py-2.5 rounded-xl bg-amber-500 hover:bg-amber-400 text-slate-950 font-bold text-sm transition-all flex items-center justify-center gap-2">
+                        <i class="fa-solid fa-coffee"></i> 모닝 서비스 가이드
+                    </button>
+                </div>
+
+                <!-- Food 5: Taiwan Ramen -->
+                <div class="bg-slate-800/80 border border-slate-700/60 rounded-3xl p-6 hover:border-amber-400/50 transition-all duration-300 flex flex-col justify-between">
+                    <div>
+                        <div class="flex items-center justify-between mb-4">
+                            <span class="px-3 py-1 rounded-full text-xs font-bold bg-red-500/20 text-red-300 border border-red-500/30">
+                                나고야가 원조인 매운 라멘
+                            </span>
+                            <button onclick="toggleWishlist('food_taiwanramen', '미센 타이완 라멘', 'gourmet')" class="wishlist-btn text-slate-400 hover:text-rose-400 transition-colors" data-id="food_taiwanramen">
+                                <i class="fa-regular fa-heart text-lg"></i>
+                            </button>
+                        </div>
+                        <h3 class="text-2xl font-extrabold text-white mb-2">타이완 라멘 (台湾ラーメン)</h3>
+                        <p class="text-slate-300 text-sm leading-relaxed mb-4">
+                            대만에는 없고 나고야 중화요리점 '미센(味仙)'에서 탄생한 칼칼한 라멘. 칠리고추와 마늘, 다진 고기, 부추가 듬뿍 들어가 한국인 입맛에 가장 잘 맞습니다.
+                        </p>
+                        <div class="bg-slate-900/60 rounded-xl p-3 mb-4 text-xs text-slate-300 space-y-1">
+                            <div><strong class="text-amber-300">대표 명가:</strong> 미센(味仙) 이마이케 본점/JR나고야역점</div>
+                            <div><strong class="text-amber-300">맵기 팁:</strong> 초심자는 덜 매운 '아메리칸(American)' 주문 가능</div>
+                        </div>
+                    </div>
+                    <button onclick="showFoodTip('taiwan')" class="w-full py-2.5 rounded-xl bg-amber-500 hover:bg-amber-400 text-slate-950 font-bold text-sm transition-all flex items-center justify-center gap-2">
+                        <i class="fa-solid fa-fire"></i> 맵기 조절 팁 보기
+                    </button>
+                </div>
+
+                <!-- Food 6: Kishimen -->
+                <div class="bg-slate-800/80 border border-slate-700/60 rounded-3xl p-6 hover:border-amber-400/50 transition-all duration-300 flex flex-col justify-between">
+                    <div>
+                        <div class="flex items-center justify-between mb-4">
+                            <span class="px-3 py-1 rounded-full text-xs font-bold bg-teal-500/20 text-teal-300 border border-teal-500/30">
+                                넙적한 면발의 정수
+                            </span>
+                            <button onclick="toggleWishlist('food_kishimen', '키시멘 (넙적우동)', 'gourmet')" class="wishlist-btn text-slate-400 hover:text-rose-400 transition-colors" data-id="food_kishimen">
+                                <i class="fa-regular fa-heart text-lg"></i>
+                            </button>
+                        </div>
+                        <h3 class="text-2xl font-extrabold text-white mb-2">키시멘 (きしめん)</h3>
+                        <p class="text-slate-300 text-sm leading-relaxed mb-4">
+                            두께는 얇고 폭은 넓적한 나고야 전통 우동. 가쓰오부시 국물이 면발에 촉촉하게 스며들어 부드럽고 매끄러운 목넘김을 선사합니다. 나고야역 신칸센 승강장에서도 인기!
+                        </p>
+                        <div class="bg-slate-900/60 rounded-xl p-3 mb-4 text-xs text-slate-300 space-y-1">
+                            <div><strong class="text-amber-300">대표 명가:</strong> 미야 키시멘(아쓰타 신궁 내), 스미요시(나고야역 승강장)</div>
+                            <div><strong class="text-amber-300">평균 가격대:</strong> 550엔 ~ 950엔</div>
+                        </div>
+                    </div>
+                    <button onclick="showFoodTip('kishimen')" class="w-full py-2.5 rounded-xl bg-amber-500 hover:bg-amber-400 text-slate-950 font-bold text-sm transition-all flex items-center justify-center gap-2">
+                        <i class="fa-solid fa-bowl-food"></i> 추천 명당 보기
+                    </button>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <!-- Itinerary Section -->
+    <section id="itinerary" class="py-20 bg-slate-100">
+        <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
+            <div class="text-center max-w-3xl mx-auto mb-12">
+                <span class="text-rose-600 font-bold text-sm tracking-wider uppercase">Curated Itineraries</span>
+                <h2 class="text-3xl sm:text-4xl font-extrabold text-slate-900 mt-2">검증된 추천 코스 플래너</h2>
+                <p class="text-slate-600 mt-2 text-base">
+                    여행 일정에 맞게 검증된 일정을 탭하여 시간대별 최적의 동선을 확인하세요.
+                </p>
+            </div>
+
+            <!-- Itinerary Switch Tabs -->
+            <div class="flex justify-center mb-8">
+                <div class="bg-white p-1.5 rounded-2xl shadow-sm border border-slate-200 flex max-w-md w-full">
+                    <button onclick="switchCourse('3n4d')" id="tab-3n4d" class="flex-1 py-3 text-sm font-bold rounded-xl transition-all bg-rose-600 text-white shadow-md">
+                        3박 4일 알짜 코스 (지브리 포함)
+                    </button>
+                    <button onclick="switchCourse('2n3d')" id="tab-2n3d" class="flex-1 py-3 text-sm font-bold rounded-xl text-slate-600 hover:text-slate-900 transition-all">
+                        2박 3일 콤팩트 도심 코스
+                    </button>
+                </div>
+            </div>
+
+            <!-- Plan Display Container -->
+            <div class="bg-white rounded-3xl border border-slate-200 p-6 sm:p-8 shadow-sm">
+                <!-- Course Header -->
+                <div class="flex flex-col sm:flex-row sm:items-center justify-between pb-6 border-b border-slate-200 gap-4">
+                    <div>
+                        <h3 id="course-title" class="text-2xl font-extrabold text-slate-900">3박 4일: 나고야 정복 & 지브리 감성 루트</h3>
+                        <p id="course-desc" class="text-slate-500 text-sm mt-1">지브리 파크 사전 예약자를 위한 도심과 감성 테마파크 밸런스 루트</p>
+                    </div>
+                    <span id="course-badge" class="self-start sm:self-center px-4 py-1.5 rounded-full bg-rose-50 text-rose-600 font-bold text-xs border border-rose-200">
+                        인기 1위 추천 플랜
+                    </span>
+                </div>
+
+                <!-- Day Selector Tabs for Current Course -->
+                <div class="flex items-center gap-2 overflow-x-auto py-6 border-b border-slate-100" id="day-tabs">
+                    <!-- Injected dynamically via JS -->
+                </div>
+
+                <!-- Timeline Schedule Items -->
+                <div class="mt-8 space-y-6" id="timeline-container">
+                    <!-- Injected dynamically via JS -->
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <!-- Transportation & Tips Section -->
+    <section id="traffic" class="py-20 bg-white">
+        <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
+            <div class="text-center max-w-3xl mx-auto mb-16">
+                <span class="text-rose-600 font-bold text-sm tracking-wider uppercase">Smart Transportation & Guides</span>
+                <h2 class="text-3xl sm:text-4xl font-extrabold text-slate-900 mt-2">나고야 여행 교통 & 필수 팁</h2>
+                <p class="text-slate-600 mt-2 text-base">공항에서 도심까지 28분! 환승 스트레스 없는 이동 꿀팁</p>
+            </div>
+
+            <div class="grid grid-cols-1 lg:grid-cols-3 gap-8">
+                <!-- Airport Transit -->
+                <div class="p-8 rounded-3xl bg-slate-50 border border-slate-200 hover:shadow-lg transition-all">
+                    <div class="w-14 h-14 rounded-2xl bg-rose-100 text-rose-600 flex items-center justify-center text-2xl mb-6">
+                        <i class="fa-solid fa-plane-arrival"></i>
+                    </div>
+                    <h3 class="text-xl font-bold text-slate-900 mb-3">주부 센트레아 공항 ↔ 시내</h3>
+                    <ul class="space-y-3 text-sm text-slate-600">
+                        <li class="flex items-start gap-2">
+                            <i class="fa-solid fa-check text-rose-500 mt-1"></i>
+                            <div>
+                                <strong class="text-slate-900">메이테쓰 특급 뮤스카이 (μ-SKY)</strong>
+                                <p class="text-xs text-slate-500 mt-0.5">센트레아 공항 → 메이테쓰 나고야역 단 28분 소요. 전좌석 지정석(운임 890엔 + 지정석권 450엔 = 1,340엔).</p>
+                            </div>
+                        </li>
+                        <li class="flex items-start gap-2">
+                            <i class="fa-solid fa-check text-rose-500 mt-1"></i>
+                            <div>
+                                <strong class="text-slate-900">메이테쓰 일반 특급/준급</strong>
+                                <p class="text-xs text-slate-500 mt-0.5">약 35~40분 소요. 특별차 티켓 없이 기본 운임 890엔으로 탑승 가능하여 가성비 우수.</p>
+                            </div>
+                        </li>
+                    </ul>
+                </div>
+
+                <!-- Subway & Passes -->
+                <div class="p-8 rounded-3xl bg-slate-50 border border-slate-200 hover:shadow-lg transition-all">
+                    <div class="w-14 h-14 rounded-2xl bg-amber-100 text-amber-600 flex items-center justify-center text-2xl mb-6">
+                        <i class="fa-solid fa-ticket"></i>
+                    </div>
+                    <h3 class="text-xl font-bold text-slate-900 mb-3">시내 교통패스 & 지하철</h3>
+                    <ul class="space-y-3 text-sm text-slate-600">
+                        <li class="flex items-start gap-2">
+                            <i class="fa-solid fa-check text-amber-500 mt-1"></i>
+                            <div>
+                                <strong class="text-slate-900">쇼류도 지하철/버스 1일 승차권</strong>
+                                <p class="text-xs text-slate-500 mt-0.5">외국인 여행자 전용 1일권 (620엔). 지하철과 시내버스를 하루 종일 무제한 탑승 가능해 3회 이상 탑승 시 무조건 이득입니다.</p>
+                            </div>
+                        </li>
+                        <li class="flex items-start gap-2">
+                            <i class="fa-solid fa-check text-amber-500 mt-1"></i>
+                            <div>
+                                <strong class="text-slate-900">도니치 에코 패스 (주말/공휴일 전용)</strong>
+                                <p class="text-xs text-slate-500 mt-0.5">토·일요일 및 공휴일, 매월 8일에는 620엔으로 자동 할인 판매되는 지하철 1일 승차권.</p>
+                            </div>
+                        </li>
+                    </ul>
+                </div>
+
+                <!-- Souvenirs & Tips -->
+                <div class="p-8 rounded-3xl bg-slate-50 border border-slate-200 hover:shadow-lg transition-all">
+                    <div class="w-14 h-14 rounded-2xl bg-sky-100 text-sky-600 flex items-center justify-center text-2xl mb-6">
+                        <i class="fa-solid fa-gift"></i>
+                    </div>
+                    <h3 class="text-xl font-bold text-slate-900 mb-3">쇼핑 & 필수 쇼핑리스트</h3>
+                    <ul class="space-y-3 text-sm text-slate-600">
+                        <li class="flex items-start gap-2">
+                            <i class="fa-solid fa-check text-sky-500 mt-1"></i>
+                            <div>
+                                <strong class="text-slate-900">유카리(ゆかり) 새우 센베이</strong>
+                                <p class="text-xs text-slate-500 mt-0.5">130년 전통 반카쿠 소혼포의 명물. 진한 왕새우 풍미의 바삭한 센베이로 선물 1순위.</p>
+                            </div>
+                        </li>
+                        <li class="flex items-start gap-2">
+                            <i class="fa-solid fa-check text-sky-500 mt-1"></i>
+                            <div>
+                                <strong class="text-slate-900">피요링(Piyorin) 병아리 디저트</strong>
+                                <p class="text-xs text-slate-500 mt-0.5">나고야역 명물 삐약이 푸딩 케이크. 모양을 흐트러뜨리지 않고 가져오는 '피요링 챌린지'로 화제!</p>
+                            </div>
+                        </li>
+                    </ul>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <!-- Budget & Currency Calculator Section -->
+    <section id="calculator" class="py-20 bg-slate-900 text-white">
+        <div class="max-w-5xl mx-auto px-4 sm:px-6 lg:px-8">
+            <div class="text-center max-w-2xl mx-auto mb-12">
+                <span class="text-amber-400 font-bold text-sm tracking-wider uppercase">Smart Estimation</span>
+                <h2 class="text-3xl sm:text-4xl font-extrabold text-white mt-2">나고야 여행 경비 간편 계산기</h2>
+                <p class="text-slate-400 mt-2 text-sm">일정에 따른 예상 현지 비용(식비, 숙박, 교통, 입장료)을 실시간으로 확인해보세요.</p>
+            </div>
+
+            <div class="glass-card bg-slate-800/90 rounded-3xl p-6 sm:p-10 border border-slate-700/80 shadow-2xl">
+                <div class="grid grid-cols-1 md:grid-cols-2 gap-8">
+                    <!-- Inputs -->
+                    <div class="space-y-5">
+                        <div>
+                            <label class="block text-xs font-semibold text-slate-300 uppercase tracking-wider mb-2">여행 일수</label>
+                            <div class="grid grid-cols-3 gap-3">
+                                <button type="button" onclick="setCalcDays(2)" class="calc-day-btn py-2.5 rounded-xl border border-slate-600 bg-slate-700/50 text-white font-semibold text-sm hover:border-rose-500 transition-all" data-days="2">2박 3일</button>
+                                <button type="button" onclick="setCalcDays(3)" class="calc-day-btn py-2.5 rounded-xl border border-rose-500 bg-rose-600/30 text-rose-300 font-semibold text-sm hover:border-rose-500 transition-all active-day" data-days="3">3박 4일</button>
+                                <button type="button" onclick="setCalcDays(4)" class="calc-day-btn py-2.5 rounded-xl border border-slate-600 bg-slate-700/50 text-white font-semibold text-sm hover:border-rose-500 transition-all" data-days="4">4박 5일</button>
+                            </div>
+                        </div>
+
+                        <div>
+                            <label class="block text-xs font-semibold text-slate-300 uppercase tracking-wider mb-2">여행 인원</label>
+                            <div class="flex items-center gap-4 bg-slate-900/80 p-2 rounded-2xl border border-slate-700">
+                                <button type="button" onclick="changePeople(-1)" class="w-10 h-10 rounded-xl bg-slate-800 text-white flex items-center justify-center font-bold text-lg hover:bg-slate-700">-</button>
+                                <span id="calc-people" class="flex-1 text-center font-extrabold text-xl text-white">2명</span>
+                                <button type="button" onclick="changePeople(1)" class="w-10 h-10 rounded-xl bg-slate-800 text-white flex items-center justify-center font-bold text-lg hover:bg-slate-700">+</button>
+                            </div>
+                        </div>
+
+                        <div>
+                            <label class="block text-xs font-semibold text-slate-300 uppercase tracking-wider mb-2">숙소 등급</label>
+                            <select id="calc-hotel-tier" onchange="calculateBudget()" class="w-full bg-slate-900/80 border border-slate-700 text-white rounded-xl p-3 text-sm focus:outline-none focus:border-rose-500">
+                                <option value="8000">비즈니스 가성비 호텔 (1박 약 8,000엔/실)</option>
+                                <option value="15000" selected>스탠다드 역세권 3~4성급 호텔 (1박 약 15,000엔/실)</option>
+                                <option value="28000">프리미엄 럭셔리 호텔/료칸 (1박 약 28,000엔/실)</option>
+                            </select>
+                        </div>
+
+                        <div>
+                            <label class="block text-xs font-semibold text-slate-300 uppercase tracking-wider mb-2">미식 스타일</label>
+                            <select id="calc-food-tier" onchange="calculateBudget()" class="w-full bg-slate-900/80 border border-slate-700 text-white rounded-xl p-3 text-sm focus:outline-none focus:border-rose-500">
+                                <option value="3500">기본 편의점 & 캐주얼 라멘 (1인 하루 약 3,500엔)</option>
+                                <option value="6500" selected>장어덮밥(히츠마부시) & 야바톤 포함 미식 (1인 하루 약 6,500엔)</option>
+                                <option value="12000">오마카세 & 프리미엄 와규 미식 투어 (1인 하루 약 12,000엔)</option>
+                            </select>
+                        </div>
+                    </div>
+
+                    <!-- Output & Breakdown -->
+                    <div class="flex flex-col justify-between bg-slate-900/90 rounded-2xl p-6 border border-slate-700/80">
+                        <div>
+                            <div class="text-xs font-semibold text-slate-400 uppercase tracking-wide mb-1">총 예상 경비 (현지 체류비)</div>
+                            <div class="flex items-baseline gap-2 mb-4">
+                                <span class="text-3xl sm:text-4xl font-extrabold text-amber-400" id="total-jpy">¥82,400</span>
+                                <span class="text-slate-400 text-sm">JPY</span>
+                            </div>
+                            <div class="text-sm font-semibold text-rose-300 pb-4 border-b border-slate-800 flex items-center justify-between">
+                                <span>원화 환산 예상 (환율 910원 기준):</span>
+                                <span class="text-lg font-bold text-white" id="total-krw">약 749,800원</span>
+                            </div>
+
+                            <div class="mt-4 space-y-2.5 text-xs sm:text-sm text-slate-300">
+                                <div class="flex justify-between">
+                                    <span class="text-slate-400"><i class="fa-solid fa-hotel text-slate-500 mr-1.5"></i> 숙박비:</span>
+                                    <span id="breakdown-hotel" class="font-medium text-white">45,000엔</span>
+                                </div>
+                                <div class="flex justify-between">
+                                    <span class="text-slate-400"><i class="fa-solid fa-utensils text-slate-500 mr-1.5"></i> 식비:</span>
+                                    <span id="breakdown-food" class="font-medium text-white">26,000엔</span>
+                                </div>
+                                <div class="flex justify-between">
+                                    <span class="text-slate-400"><i class="fa-solid fa-train-subway text-slate-500 mr-1.5"></i> 교통비(공항왕복+시내):</span>
+                                    <span id="breakdown-transit" class="font-medium text-white">7,800엔</span>
+                                </div>
+                                <div class="flex justify-between">
+                                    <span class="text-slate-400"><i class="fa-solid fa-ticket text-slate-500 mr-1.5"></i> 입장료 및 기타:</span>
+                                    <span id="breakdown-tickets" class="font-medium text-white">3,600엔</span>
+                                </div>
+                            </div>
+                        </div>
+
+                        <div class="mt-6 pt-4 border-t border-slate-800 text-[11px] text-slate-500">
+                            * 항공권 요금은 제외된 현지 체류 경비 기준입니다. 환율 변동 및 예약 시점에 따라 실제 비용은 달라질 수 있습니다.
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <!-- Footer Section -->
+    <footer class="bg-slate-950 text-slate-400 py-12 border-t border-slate-800 mt-auto">
+        <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
+            <div class="flex flex-col md:flex-row items-center justify-between gap-6">
+                <div class="flex items-center gap-3">
+                    <div class="w-10 h-10 rounded-xl bg-gradient-to-tr from-rose-600 to-amber-500 flex items-center justify-center text-white text-lg">
+                        <i class="fa-solid fa-torii-gate"></i>
+                    </div>
+                    <div>
+                        <div class="font-bold text-white text-base">VISIT NAGOYA</div>
+                        <p class="text-xs text-slate-500">감성 도시 나고야 여행 종합 가이드</p>
+                    </div>
+                </div>
+
+                <div class="flex flex-wrap justify-center gap-6 text-xs text-slate-400">
+                    <a href="#attractions" class="hover:text-white transition-colors">주요 명소</a>
+                    <a href="#gourmet" class="hover:text-white transition-colors">나고야 메시</a>
+                    <a href="#itinerary" class="hover:text-white transition-colors">추천 일정</a>
+                    <a href="#traffic" class="hover:text-white transition-colors">교통 정보</a>
+                    <a href="#calculator" class="hover:text-white transition-colors">예산 계산</a>
+                </div>
+
+                <p class="text-xs text-slate-600">
+                    &copy; 2026 Visit Nagoya Web Guide. All rights reserved.
+                </p>
+            </div>
+        </div>
+    </footer>
+
+    <!-- Wishlist Modal -->
+    <div id="wishlist-modal" class="fixed inset-0 z-50 hidden bg-slate-950/70 backdrop-blur-sm flex items-center justify-center p-4">
+        <div class="bg-white rounded-3xl max-w-lg w-full p-6 sm:p-8 shadow-2xl border border-slate-200 relative max-h-[85vh] flex flex-col">
+            <div class="flex items-center justify-between pb-4 border-b border-slate-100 mb-4">
+                <div class="flex items-center gap-2">
+                    <i class="fa-solid fa-heart text-rose-600 text-xl"></i>
+                    <h3 class="font-extrabold text-xl text-slate-900">내 여행 위시리스트</h3>
+                </div>
+                <button onclick="closeWishlistModal()" class="w-8 h-8 rounded-full bg-slate-100 hover:bg-slate-200 text-slate-600 flex items-center justify-center">
+                    <i class="fa-solid fa-xmark"></i>
+                </button>
+            </div>
+            
+            <!-- List -->
+            <div id="wishlist-items-container" class="overflow-y-auto flex-1 space-y-3 pr-1">
+                <!-- Dynamically generated -->
+            </div>
+
+            <div class="pt-4 mt-4 border-t border-slate-100 flex items-center justify-between">
+                <button onclick="clearWishlist()" class="text-xs text-slate-400 hover:text-rose-600 transition-colors">
+                    모두 비우기
+                </button>
+                <button onclick="closeWishlistModal()" class="px-5 py-2.5 rounded-xl bg-slate-900 text-white font-bold text-xs hover:bg-slate-800">
+                    닫기
+                </button>
+            </div>
+        </div>
+    </div>
+
+    <!-- Details Modal -->
+    <div id="detail-modal" class="fixed inset-0 z-50 hidden bg-slate-950/70 backdrop-blur-sm flex items-center justify-center p-4">
+        <div class="bg-white rounded-3xl max-w-2xl w-full p-6 sm:p-8 shadow-2xl border border-slate-200 relative max-h-[90vh] flex flex-col overflow-y-auto">
+            <button onclick="closeDetailModal()" class="absolute top-6 right-6 w-9 h-9 rounded-full bg-slate-100 hover:bg-slate-200 text-slate-600 flex items-center justify-center z-10">
+                <i class="fa-solid fa-xmark text-sm"></i>
+            </button>
+            <div id="detail-modal-content">
+                <!-- Injected via JS -->
+            </div>
+        </div>
+    </div>
+
+    <!-- Toast Notification Message Box -->
+    <div id="toast" class="fixed bottom-6 right-6 z-50 bg-slate-900 text-white px-5 py-3 rounded-2xl shadow-xl border border-slate-700 flex items-center gap-3 transform translate-y-24 opacity-0 transition-all duration-300 pointer-events-none">
+        <i id="toast-icon" class="fa-solid fa-circle-check text-emerald-400"></i>
+        <span id="toast-text" class="text-sm font-medium">안내 메시지</span>
+    </div>
+
+    <script>
+        // Course Data
+        const itineraries = {
+            '3n4d': {
+                title: '3박 4일: 나고야 정복 & 지브리 감성 루트',
+                desc: '지브리 파크 관람과 시내 역사, 쇼핑, 미식을 완벽하게 아우르는 골든 루트',
+                badge: '인기 1위 추천 플랜',
+                days: [
+                    {
+                        dayNum: 'DAY 1',
+                        subtitle: '도착 & 나고야 도심 랜드마크',
+                        timeline: [
+                            { time: '12:30', title: '주부 센트레아 공항 도착 및 뮤스카이 탑승', desc: '공항에서 뮤스카이를 타고 나고야역으로 이동 (약 28분 소요). 숙소 체크인 및 짐 보관.' },
+                            { time: '14:30', title: '나고야성 & 혼마루 어전', desc: '도쿠가와 이에야스의 역사와 웅장한 천수각, 화려한 혼마루 어전 내부 금박 병풍 관람.' },
+                            { time: '18:00', title: '저녁 식사: 야바톤 미소카츠', desc: '사카에 본점 또는 나고야역 메이테쓰 백화점 9층에서 핫초미소 소스의 돈카츠 만끽.' },
+                            { time: '19:45', title: '오아시스 21 & 미라이 타워 야경', desc: '유리 지붕 물의 우주선 위에서 내려다보는 환상적인 조명 쇼와 시내 야경 감상.' }
+                        ]
+                    },
+                    {
+                        dayNum: 'DAY 2',
+                        subtitle: '꿈과 감성의 지브리 파크 데이',
+                        timeline: [
+                            { time: '08:30', title: '코메다 커피 나고야 모닝', desc: '음료 주문 시 갓 구운 토스트와 달콤한 단팥(오구라) 앙금이 함께 나오는 나고야 전통 조식.' },
+                            { time: '10:00', title: '지브리 파크 입장 (사전 예약 티켓)', desc: '지브리 대창고, 마녀의 계곡, 모노노케 마을 등 애니메이션 명장면 속으로 시간 여행.' },
+                            { time: '16:30', title: '시내 복귀 & 오스 상점가 탐방', desc: '전통 사찰 오스칸논 참배 후 빈티지 거리 쇼핑 및 길거리 당고, 가라아게 시식.' },
+                            { time: '19:30', title: '저녁: 세카이노 야마짱 테바사키', desc: '매콤 알싸한 후추 양념의 닭날개 튀김과 시원한 나마비루(생맥주)로 하루 마무리.' }
+                        ]
+                    },
+                    {
+                        dayNum: 'DAY 3',
+                        subtitle: '역사 신사 & 기술 혁신 투어',
+                        timeline: [
+                            { time: '09:30', title: '아쓰타 신궁 산책 & 키시멘', desc: '천년 고목이 울창한 신궁 숲길을 걷고 신궁 내 미야 키시멘에서 아침 겸 점심.' },
+                            { time: '12:30', title: '아츠타 호라이켄 본점 히츠마부시', desc: '140년 전통 나고야 최고의 장어덮밥 맛집 방문 (대기표 수령 권장).' },
+                            { time: '15:00', title: '도요타 산업기술기념관', desc: '직접 직조기와 자동차 프레스 엔진이 작동하는 압도적 기술 시연 관람.' },
+                            { time: '18:30', title: '사카에 돈키호테 및 백화점 쇼핑', desc: '라시크, 미츠코시 백화점 및 사카에 대형 쇼핑몰에서 기념품 쇼핑.' }
+                        ]
+                    },
+                    {
+                        dayNum: 'DAY 4',
+                        subtitle: '마지막 미식 & 공항 출국',
+                        timeline: [
+                            { time: '10:00', title: 'JR 나고야역 타카시마야 백화점', desc: '지하 식품관에서 유카리 새우 센베이 등 오미야게(기념 선물) 구매.' },
+                            { time: '11:30', title: '점심: 미센 타이완 라멘', desc: '화끈하고 얼큰한 다진 고기 토핑의 나고야 오리지널 매운 라멘으로 여행 마무리.' },
+                            { time: '13:00', title: '센트레아 공항 이동 및 귀국', desc: '뮤스카이 탑승 후 공항 도착, 면세점 쇼핑 후 인천행 비행기 탑승.' }
+                        ]
+                    }
+                ]
+            },
+            '2n3d': {
+                title: '2박 3일: 콤팩트 도심 하이라이트',
+                desc: '짧은 연차나 주말을 활용해 핵심 랜드마크와 나고야 3대 미식을 정복하는 코스',
+                badge: '주말 힐링 추천',
+                days: [
+                    {
+                        dayNum: 'DAY 1',
+                        subtitle: '나고야성 & 도심 야경',
+                        timeline: [
+                            { time: '13:00', title: '나고야역 도착 후 호텔 체크인', desc: '뮤스카이 탑승 후 도심 진입, 역 근처 숙소에 짐 보관.' },
+                            { time: '14:30', title: '나고야성 & 킨샤치 요코초', desc: '나고야성 관람 후 성문 앞 먹거리 골목에서 미소 가라아게 시식.' },
+                            { time: '18:30', title: '오아시스 21 야경 & 미소카츠 저녁', desc: '야바톤 라시크점에서 미소카츠를 먹고 오아시스 21의 영롱한 야경 감상.' }
+                        ]
+                    },
+                    {
+                        dayNum: 'DAY 2',
+                        subtitle: '오스 문화 & 장어덮밥 미식',
+                        timeline: [
+                            { time: '09:00', title: '코메다 커피 모닝 토스트', desc: '팥 앙금과 버터의 완벽한 조화 오구라 토스트로 활기찬 아침 시작.' },
+                            { time: '11:30', title: '히츠마부시 빈쵸 점심', desc: '숯불 향이 그윽한 장어를 오차즈케로 마무리하는 호화로운 점심 식사.' },
+                            { time: '14:00', title: '오스 상점가 & 아쓰타 신궁', desc: '활기찬 상점가와 고즈넉한 신사를 연달아 돌아보며 나고야의 두 얼굴 경험.' },
+                            { time: '19:00', title: '테바사키에 생맥주 한잔', desc: '후라이보 또는 야마짱에서 바삭한 닭날개 요리로 하루 정리.' }
+                        ]
+                    },
+                    {
+                        dayNum: 'DAY 3',
+                        subtitle: '쇼핑 & 타이완 라멘 피날레',
+                        timeline: [
+                            { time: '10:00', title: '도요타 기념관 또는 나고야역 쇼핑', desc: '게이트타워 쇼핑몰, 빅카메라 등에서 기념품 쇼핑.' },
+                            { time: '12:00', title: '미센 타이완 라멘', desc: '매콤하고 얼큰한 국물로 여행의 아쉬움을 달래는 든든한 점심.' },
+                            { time: '14:00', title: '센트레아 공항 이동 및 출국', desc: '공항 전망대 스카이데크 구경 후 귀국편 탑승.' }
+                        ]
+                    }
+                ]
+            }
+        };
+
+        // Spot Modal Details
+        const spotDetails = {
+            'castle': {
+                title: '나고야성 & 혼마루 어전 (Nagoya Castle)',
+                image: 'https://images.unsplash.com/photo-1590253230537-83d735070ec9?auto=format&fit=crop&w=1000&q=80',
+                badge: '일본 3대 명성',
+                content: `
+                    <p class="text-slate-600 mb-3">도쿠가와 이에야스가 축성한 성으로, 지붕 위에 우뚝 솟은 순금 '샤치호코(호랑이 머리에 물고기 몸통을 한 상상 속의 동물)'가 상징입니다.</p>
+                    <p class="text-slate-600 mb-3">특히 10년의 복원 공사 끝에 완성된 <strong>혼마루 어전(本丸御殿)</strong>은 히노키 편백나무 향과 눈부신 금박 벽화로 장식되어 있어 에도 시대 최고 권력자의 거주 공간을 생생히 느낄 수 있습니다.</p>
+                    <div class="bg-slate-50 p-4 rounded-2xl border border-slate-200 mt-4 text-xs space-y-1.5 text-slate-700">
+                        <div><strong>운영시간:</strong> 09:00 ~ 16:30 (어전 입장은 16:00까지)</div>
+                        <div><strong>교통편:</strong> 지하철 메이조선 '나고야조(나고야성)'역 7번 출구 도보 5분</div>
+                        <div><strong>꿀팁:</strong> 성 정문 앞 '킨샤치 요코초' 먹거리 골목에서 금박 아이스크림과 미소 꼬치를 꼭 맛보세요!</div>
+                    </div>
+                `
+            },
+            'ghibli': {
+                title: '지브리 파크 (Ghibli Park)',
+                image: 'https://images.unsplash.com/photo-1578632767115-351597cf2477?auto=format&fit=crop&w=1000&q=80',
+                badge: '글로벌 인기 스팟',
+                content: `
+                    <p class="text-slate-600 mb-3">스튜디오 지브리의 세계관을 거대한 자연 공원 속에 그대로 재현한 테마파크입니다. 인위적인 대형 놀이기구 대신 미야자키 하야오의 애니메이션 공간을 거닐며 오감으로 체험할 수 있습니다.</p>
+                    <p class="text-slate-600 mb-3"><strong>핵심 에어리어:</strong> 지브리 대창고, 청춘의 언덕(귀를 기울이면), 돈도코 숲(이웃집 토토로), 모노노케 마을, 마녀의 계곡(하울의 움직이는 성).</p>
+                    <div class="bg-amber-50 p-4 rounded-2xl border border-amber-200 mt-4 text-xs space-y-1.5 text-amber-900">
+                        <div><strong>예약 안내:</strong> 관람일 약 2개월 전 공식 해외 티켓 판매 사이트에서 치열한 사전 예약 필수!</div>
+                        <div><strong>교통편:</strong> 지하철 히가시야마선 후지가오카역 환승 → 자기부상열차 '리니모' 타고 '아이치구큐하쿠키넨코엔'역 하차.</div>
+                    </div>
+                `
+            },
+            'oasis21': {
+                title: '오아시스 21 & 주부전력 MIRAI TOWER',
+                image: 'https://images.unsplash.com/photo-1503899036084-c55cdd92da26?auto=format&fit=crop&w=1000&q=80',
+                badge: '사카에 중심 야경',
+                content: `
+                    <p class="text-slate-600 mb-3">나고야의 최대 번화가 '사카에'의 랜드마크. 타원형 유리 천장 위로 얇은 물이 찰랑이는 지상 14m의 '물의 우주선' 산책로에서는 지상과는 또 다른 낭만을 즐길 수 있습니다.</p>
+                    <p class="text-slate-600 mb-3">바로 인접한 옛 테레비 타워(주부전력 미라이 타워)의 조명과 함께 렌즈에 담으면 근미래 SF 영화 속 한 장면에 들어온 듯한 사진을 남길 수 있습니다.</p>
+                    <div class="bg-slate-50 p-4 rounded-2xl border border-slate-200 mt-4 text-xs space-y-1.5 text-slate-700">
+                        <div><strong>개방시간:</strong> 물의 우주선 10:00 ~ 21:00 (무료 관람)</div>
+                        <div><strong>포토스팟:</strong> 오아시스21 난간 끝에서 미라이 타워를 정면으로 바라보는 구도가 최고 인기!</div>
+                    </div>
+                `
+            },
+            'atsuta': {
+                title: '아쓰타 신궁 (Atsuta Jingu)',
+                image: 'https://images.unsplash.com/photo-1528164344705-475426879c0d?auto=format&fit=crop&w=1000&q=80',
+                badge: '영험한 숲속 힐링',
+                content: `
+                    <p class="text-slate-600 mb-3">이세신궁에 버금가는 신성한 장소로, 1,900년 이상의 역사를 자랑합니다. 일본 황실의 삼종신기 중 하나인 전설의 '쿠사나기의 검'이 모셔져 있습니다.</p>
+                    <p class="text-slate-600 mb-3">도심 한가운데라고 믿기 힘들 만큼 수령 천 년이 넘는 거목들과 녹음이 우거져 있어 고요한 명상과 산책에 적합합니다.</p>
+                    <div class="bg-slate-50 p-4 rounded-2xl border border-slate-200 mt-4 text-xs space-y-1.5 text-slate-700">
+                        <div><strong>입장료:</strong> 경내 무료 산책 (보물관만 유료)</div>
+                        <div><strong>추천 코스:</strong> 경내에 위치한 '미야 키시멘' 야외 파라솔 밑에서 먹는 따끈한 우동은 나고야 여행의 백미입니다.</div>
+                    </div>
+                `
+            },
+            'osu': {
+                title: '오스 상점가 & 오스칸논 (Osu Shopping District)',
+                image: 'https://images.unsplash.com/photo-1555396273-367ea4eb4db5?auto=format&fit=crop&w=1000&q=80',
+                badge: '전통과 현대의 공존',
+                content: `
+                    <p class="text-slate-600 mb-3">나고야의 홍대이자 아키하바라로 불리는 다채로운 아케이드 상권입니다. 붉은색 강렬한 오스칸논 사찰 마당에는 수많은 비둘기와 참배객이 모여듭니다.</p>
+                    <p class="text-slate-600 mb-3">골목마다 빈티지 구제 옷가게, 전자상가, 애니메이션 피규어 매장, 대만식 지파이와 크레페 등 글로벌 길거리 간식들이 가득합니다.</p>
+                    <div class="bg-slate-50 p-4 rounded-2xl border border-slate-200 mt-4 text-xs space-y-1.5 text-slate-700">
+                        <div><strong>방문 추천 시간:</strong> 오후 12:00 ~ 18:00 (대부분 점포 활성화)</div>
+                        <div><strong>위치:</strong> 지하철 쓰루마이선 '오스칸논'역 또는 메이조선 '가미마에즈'역 하차</div>
+                    </div>
+                `
+            },
+            'toyota': {
+                title: '도요타 산업기술기념관 (Toyota Commemorative Museum)',
+                image: 'https://images.unsplash.com/photo-1552519507-da3b142c6e3d?auto=format&fit=crop&w=1000&q=80',
+                badge: '제조업의 성지 나고야',
+                content: `
+                    <p class="text-slate-600 mb-3">토요타 그룹의 발상지였던 방직공장 붉은 벽돌 건물을 그대로 보존한 대규모 체험형 박물관입니다.</p>
+                    <p class="text-slate-600 mb-3">초기 방직 기계부터 도요타 자동차의 역사, 실제 금속 프레스 가공 장비와 로봇 조립 라인의 시연을 눈앞에서 지켜볼 수 있어 어른과 아이 모두에게 감탄을 자아냅니다.</p>
+                    <div class="bg-slate-50 p-4 rounded-2xl border border-slate-200 mt-4 text-xs space-y-1.5 text-slate-700">
+                        <div><strong>입장료:</strong> 성인 500엔 / 학생 300엔 (외국인 음성 가이드기 무료 대여 가능)</div>
+                        <div><strong>접근성:</strong> 메이테쓰 나고야본선 '사코'역에서 도보 3분</div>
+                    </div>
+                `
+            }
+        };
+
+        // Food Tip Modals
+        const foodTips = {
+            'hitsumabushi': {
+                title: '히츠마부시(장어덮밥) 제대로 즐기는 4단계 법칙',
+                content: `
+                    <div class="space-y-3 text-slate-700 text-sm">
+                        <div class="p-3 bg-amber-50 rounded-xl border border-amber-200">
+                            <strong class="text-amber-900 block mb-1">1단계: 1/4을 밥공기에 덜어 본연의 맛 즐기기</strong>
+                            바삭하게 구워진 장어와 소스, 쌀밥의 본래 풍미를 고스란히 느낍니다.
+                        </div>
+                        <div class="p-3 bg-amber-50 rounded-xl border border-amber-200">
+                            <strong class="text-amber-900 block mb-1">2단계: 야쿠미(파, 와사비, 김가루)를 얹어 비벼먹기</strong>
+                            향긋한 파와 알싸한 와사비가 장어의 기름진 맛을 산뜻하게 잡아줍니다.
+                        </div>
+                        <div class="p-3 bg-amber-50 rounded-xl border border-amber-200">
+                            <strong class="text-amber-900 block mb-1">3단계: 따뜻한 오차즈케 육수(다시 국물) 부어 말아먹기</strong>
+                            깊은 감칠맛의 육수와 김, 장어가 어우러져 부드럽고 따스한 별미가 됩니다.
+                        </div>
+                        <div class="p-3 bg-amber-50 rounded-xl border border-amber-200">
+                            <strong class="text-amber-900 block mb-1">4단계: 세 가지 방법 중 가장 마음에 든 방식으로 마지막 1/4 먹기!</strong>
+                        </div>
+                    </div>
+                `
+            },
+            'misokatsu': {
+                title: '미소카츠(된장 돈카츠) 200% 즐기는 꿀팁',
+                content: `
+                    <div class="space-y-3 text-slate-700 text-sm">
+                        <p>나고야의 명물 미소 소스는 일반 된장과 달리 콩만으로 장기 발효시킨 진한 적된장(핫초미소)에 단맛을 더해 중독성이 매우 강합니다.</p>
+                        <div class="p-3 bg-rose-50 rounded-xl border border-rose-200">
+                            <strong class="text-rose-900 block mb-1">테이블 위 '연겨자' & '고춧가루' 활용</strong>
+                            접시 옆에 연겨자를 살짝 묻혀 먹거나 이치미(고춧가루)를 뿌려 먹으면 느끼함이 사라지고 감칠맛이 폭발합니다.
+                        </div>
+                        <p class="text-xs text-slate-500">야바톤 매장에서는 뜨거운 철판 위에 양배추를 깔고 즉석에서 소스를 촤르륵 부어주는 '철판 히레카츠' 메뉴를 가장 추천합니다.</p>
+                    </div>
+                `
+            },
+            'tebasaki': {
+                title: '테바사키 뼈를 1초 만에 발라내는 비법',
+                content: `
+                    <div class="space-y-3 text-slate-700 text-sm">
+                        <div class="p-3 bg-slate-100 rounded-xl">
+                            <strong class="block text-slate-900 mb-1">1초 발골 테크닉:</strong>
+                            1) 날개의 접히는 관절 끝부분을 손으로 비틀어 꺾어 떼어냅니다.<br>
+                            2) 살이 많은 몸통 부분을 입에 통째로 넣고 입술과 이로 지그시 뭅니다.<br>
+                            3) 손으로 뼈를 잡고 밖으로 쑥 잡아당기면 살코기만 입안에 남고 뼈 2개만 쏙 빠져나옵니다!
+                        </div>
+                        <p class="text-xs text-slate-500">* 세카이노 야마짱의 테바사키는 후추 맛이 강해 매콤하며, 후라이보는 달콤 짭조름한 소스가 매력적입니다.</p>
+                    </div>
+                `
+            },
+            'ogura': {
+                title: '나고야 모닝 서비스(Morning Service)란?',
+                content: `
+                    <div class="space-y-3 text-slate-700 text-sm">
+                        <p>나고야에서는 아침 시간(보통 7시~11시)에 카페에서 커피나 음료 1잔을 주문하면, <strong>두툼하게 토스트한 식빵과 삶은 달걀, 또는 오구라 단팥 앙금 스프레드를 무료</strong>로 제공합니다.</p>
+                        <p>바삭하고 따뜻한 버터 토스트 위에 부드러운 단팥을 듬뿍 얹어 먹는 '단짠' 조합은 나고야 여행자들의 아침 필수 의식입니다.</p>
+                        <div class="p-3 bg-sky-50 rounded-xl border border-sky-200 text-xs text-sky-900">
+                            추천 카페: 코메다 커피(Komeda), 카코(KAKO) 하나구루마 본점, 부초 커피(BUCHO)
+                        </div>
+                    </div>
+                `
+            },
+            'taiwan': {
+                title: '타이완 라멘 맵기 조절 & 먹는 요령',
+                content: `
+                    <div class="space-y-3 text-slate-700 text-sm">
+                        <p>1970년대 나고야 중화요리점 '미센(味仙)'의 대만인 오너 곽명생 씨가 대만 단자이멘을 얼큰하게 개량해 직원 식사로 만든 것이 시초입니다.</p>
+                        <div class="p-3 bg-red-50 rounded-xl border border-red-200">
+                            <strong class="text-red-900 block mb-1">미센(味仙) 주문 꿀팁</strong>
+                            - <strong>아메리칸(American):</strong> 매운맛에 약한 분들을 위해 닭육수를 더 부어 덜 맵게 해주는 옵션<br>
+                            - <strong>기본(Original):</strong> 신라면보다 칼칼하고 마늘 풍미가 강함<br>
+                            - <strong>에일리언(Alien):</strong> 극강의 매운맛을 원하는 매니아 전용
+                        </div>
+                    </div>
+                `
+            },
+            'kishimen': {
+                title: '키시멘(넙적우동) 어디서 먹어야 할까?',
+                content: `
+                    <div class="space-y-3 text-slate-700 text-sm">
+                        <p>우동보다 납작하고 부드러운 키시멘은 맑고 진한 다시마·가쓰오 육수가 면에 착 달라붙는 매력이 있습니다.</p>
+                        <div class="p-3 bg-emerald-50 rounded-xl border border-emerald-200">
+                            <strong class="text-emerald-900 block mb-1">대표 추천 스팟:</strong>
+                            1. <strong>나고야역 신칸센/재래선 승강장 '스미요시(住よし)'</strong>: 열차를 타기 전 서서 빠르게 호로록 먹는 전통의 명물 우동집.<br>
+                            2. <strong>아쓰타 신궁 경내 '미야 키시멘'</strong>: 야외 숲속 테이블에서 자연과 함께 즐기는 품격 있는 키시멘.
+                        </div>
+                    </div>
+                `
+            }
+        };
+
+        let currentCourseKey = '3n4d';
+        let currentDayIdx = 0;
+        let wishlist = [];
+
+        // Load Wishlist from LocalStorage safely
+        try {
+            const saved = localStorage.getItem('nagoya_wishlist');
+            if (saved) {
+                wishlist = JSON.parse(saved);
+            }
+        } catch(e) {
+            wishlist = [];
+        }
+
+        // Initialize App on DOM Load
+        window.addEventListener('DOMContentLoaded', () => {
+            renderItineraryTabs();
+            renderTimeline();
+            updateWishlistUI();
+            calculateBudget();
+        });
+
+        function switchCourse(key) {
+            currentCourseKey = key;
+            currentDayIdx = 0;
+
+            // Toggle Tab Buttons Styling
+            const tab3 = document.getElementById('tab-3n4d');
+            const tab2 = document.getElementById('tab-2n3d');
+
+            if (key === '3n4d') {
+                tab3.className = "flex-1 py-3 text-sm font-bold rounded-xl transition-all bg-rose-600 text-white shadow-md";
+                tab2.className = "flex-1 py-3 text-sm font-bold rounded-xl text-slate-600 hover:text-slate-900 transition-all";
+            } else {
+                tab2.className = "flex-1 py-3 text-sm font-bold rounded-xl transition-all bg-rose-600 text-white shadow-md";
+                tab3.className = "flex-1 py-3 text-sm font-bold rounded-xl text-slate-600 hover:text-slate-900 transition-all";
+            }
+
+            // Update Titles
+            const cData = itineraries[key];
+            document.getElementById('course-title').innerText = cData.title;
+            document.getElementById('course-desc').innerText = cData.desc;
+            document.getElementById('course-badge').innerText = cData.badge;
+
+            renderItineraryTabs();
+            renderTimeline();
+        }
+
+        function renderItineraryTabs() {
+            const container = document.getElementById('day-tabs');
+            const days = itineraries[currentCourseKey].days;
+
+            let html = '';
+            days.forEach((day, idx) => {
+                const isActive = idx === currentDayIdx;
+                const activeClass = isActive 
+                    ? 'bg-slate-900 text-white shadow' 
+                    : 'bg-slate-100 text-slate-600 hover:bg-slate-200';
+
+                html += `
+                    <button onclick="selectDay(${idx})" class="px-5 py-2.5 rounded-xl text-xs sm:text-sm font-bold transition-all whitespace-nowrap ${activeClass}">
+                        ${day.dayNum} : ${day.subtitle}
+                    </button>
+                `;
+            });
+            container.innerHTML = html;
+        }
+
+        function selectDay(idx) {
+            currentDayIdx = idx;
+            renderItineraryTabs();
+            renderTimeline();
+        }
+
+        function renderTimeline() {
+            const container = document.getElementById('timeline-container');
+            const dayData = itineraries[currentCourseKey].days[currentDayIdx];
+
+            let html = '';
+            dayData.timeline.forEach((item, i) => {
+                html += `
+                    <div class="relative pl-8 sm:pl-10 pb-6 border-l-2 border-rose-200 last:border-transparent last:pb-0 group">
+                        <div class="absolute -left-2.5 top-0 w-5 h-5 rounded-full bg-white border-4 border-rose-600 group-hover:scale-125 transition-transform"></div>
+                        <div class="flex flex-col sm:flex-row sm:items-baseline gap-1 sm:gap-3 mb-1">
+                            <span class="text-xs font-black text-rose-600 tracking-wide bg-rose-50 px-2 py-0.5 rounded border border-rose-200 self-start sm:self-auto">${item.time}</span>
+                            <h4 class="text-base sm:text-lg font-bold text-slate-900">${item.title}</h4>
+                        </div>
+                        <p class="text-sm text-slate-600 leading-relaxed">${item.desc}</p>
+                    </div>
+                `;
+            });
+
+            container.innerHTML = html;
+        }
+
+        function filterSpots(category) {
+            const cards = document.querySelectorAll('.spot-card');
+            const buttons = document.querySelectorAll('.spot-filter-btn');
+
+            buttons.forEach(btn => {
+                if (btn.dataset.cat === category) {
+                    btn.className = "spot-filter-btn px-4 py-2 rounded-xl text-xs sm:text-sm font-semibold bg-rose-600 text-white shadow-sm transition-all";
+                } else {
+                    btn.className = "spot-filter-btn px-4 py-2 rounded-xl text-xs sm:text-sm font-semibold bg-white text-slate-700 border border-slate-200 hover:bg-slate-100 transition-all";
+                }
+            });
+
+            cards.forEach(card => {
+                if (category === 'all' || card.dataset.category === category) {
+                    card.style.display = 'flex';
+                } else {
+                    card.style.display = 'none';
+                }
+            });
+        }
+
+        function toggleWishlist(id, name, type) {
+            const index = wishlist.findIndex(item => item.id === id);
+            if (index > -1) {
+                wishlist.splice(index, 1);
+                showToast(`'${name}'이(가) 위시리스트에서 제거되었습니다.`);
+            } else {
+                wishlist.push({ id, name, type, addedAt: new Date().toLocaleDateString() });
+                showToast(`'${name}'이(가) 위시리스트에 저장되었습니다!`);
+            }
+            try {
+                localStorage.setItem('nagoya_wishlist', JSON.stringify(wishlist));
+            } catch(e) {}
+            updateWishlistUI();
+        }
+
+        function updateWishlistUI() {
+            // Count Badges
+            const badgeDesk = document.getElementById('wishlist-badge');
+            const badgeMob = document.getElementById('wishlist-badge-mobile');
+            const count = wishlist.length;
+
+            if (badgeDesk) badgeDesk.innerText = count;
+            if (badgeMob) badgeMob.innerText = count;
+
+            // Buttons Highlight
+            document.querySelectorAll('.wishlist-btn').forEach(btn => {
+                const id = btn.dataset.id;
+                const isSaved = wishlist.some(item => item.id === id);
+                if (isSaved) {
+                    btn.innerHTML = '<i class="fa-solid fa-heart text-rose-500"></i>';
+                    btn.classList.add('text-rose-500');
+                } else {
+                    btn.innerHTML = '<i class="fa-regular fa-heart"></i>';
+                    btn.classList.remove('text-rose-500');
+                }
+            });
+        }
+
+        function openWishlistModal() {
+            const modal = document.getElementById('wishlist-modal');
+            const container = document.getElementById('wishlist-items-container');
+
+            if (wishlist.length === 0) {
+                container.innerHTML = `
+                    <div class="text-center py-12 text-slate-400">
+                        <i class="fa-regular fa-heart text-4xl mb-3 text-slate-300"></i>
+                        <p class="text-sm">아직 저장한 명소나 음식이 없습니다.</p>
+                        <p class="text-xs text-slate-400 mt-1">하트 버튼을 눌러 나만의 여행 버킷리스트를 채워보세요!</p>
+                    </div>
+                `;
+            } else {
+                let html = '';
+                wishlist.forEach(item => {
+                    const icon = item.type === 'gourmet' ? 'fa-utensils' : 'fa-location-dot';
+                    html += `
+                        <div class="flex items-center justify-between p-3.5 rounded-2xl bg-slate-50 border border-slate-200/80">
+                            <div class="flex items-center gap-3">
+                                <div class="w-8 h-8 rounded-lg bg-rose-100 text-rose-600 flex items-center justify-center text-xs">
+                                    <i class="fa-solid ${icon}"></i>
+                                </div>
+                                <div>
+                                    <div class="text-sm font-bold text-slate-900">${item.name}</div>
+                                    <div class="text-[10px] text-slate-400">저장일: ${item.addedAt}</div>
+                                </div>
+                            </div>
+                            <button onclick="toggleWishlist('${item.id}', '${item.name}', '${item.type}'); openWishlistModal();" class="text-slate-400 hover:text-rose-600 text-xs px-2 py-1">
+                                <i class="fa-solid fa-trash-can"></i>
+                            </button>
+                        </div>
+                    `;
+                });
+                container.innerHTML = html;
+            }
+
+            modal.classList.remove('hidden');
+        }
+
+        function closeWishlistModal() {
+            document.getElementById('wishlist-modal').classList.add('hidden');
+        }
+
+        function clearWishlist() {
+            wishlist = [];
+            try {
+                localStorage.removeItem('nagoya_wishlist');
+            } catch(e) {}
+            updateWishlistUI();
+            openWishlistModal();
+            showToast('위시리스트가 모두 비워졌습니다.');
+        }
+
+        function openDetailModal(key) {
+            const data = spotDetails[key];
+            if (!data) return;
+
+            const modal = document.getElementById('detail-modal');
+            const content = document.getElementById('detail-modal-content');
+
+            content.innerHTML = `
+                <div class="relative h-64 -mx-6 sm:-mx-8 -mt-6 sm:-mt-8 mb-6 overflow-hidden rounded-t-3xl">
+                    <img src="${data.image}" alt="${data.title}" class="w-full h-full object-cover">
+                    <span class="absolute bottom-4 left-6 bg-slate-900/85 text-amber-300 text-xs font-bold px-3 py-1.5 rounded-full border border-amber-400/30">
+                        ${data.badge}
+                    </span>
+                </div>
+                <h3 class="text-2xl font-extrabold text-slate-900 mb-4">${data.title}</h3>
+                <div class="prose text-sm leading-relaxed">${data.content}</div>
+                <div class="mt-8 flex justify-end">
+                    <button onclick="closeDetailModal()" class="px-6 py-2.5 rounded-xl bg-slate-900 text-white font-bold text-sm hover:bg-slate-800">
+                        닫기
+                    </button>
+                </div>
+            `;
+
+            modal.classList.remove('hidden');
+        }
+
+        function closeDetailModal() {
+            document.getElementById('detail-modal').classList.add('hidden');
+        }
+
+        function showFoodTip(key) {
+            const data = foodTips[key];
+            if (!data) return;
+
+            const modal = document.getElementById('detail-modal');
+            const content = document.getElementById('detail-modal-content');
+
+            content.innerHTML = `
+                <div class="flex items-center gap-3 mb-4 text-amber-600">
+                    <div class="w-10 h-10 rounded-xl bg-amber-100 flex items-center justify-center text-lg">
+                        <i class="fa-solid fa-lightbulb"></i>
+                    </div>
+                    <h3 class="text-xl font-extrabold text-slate-900">${data.title}</h3>
+                </div>
+                <div class="text-sm leading-relaxed">${data.content}</div>
+                <div class="mt-6 flex justify-end">
+                    <button onclick="closeDetailModal()" class="px-6 py-2 rounded-xl bg-slate-900 text-white font-bold text-xs hover:bg-slate-800">
+                        확인 완료
+                    </button>
+                </div>
+            `;
+
+            modal.classList.remove('hidden');
+        }
+
+        let calcDays = 3;
+        let calcPeople = 2;
+
+        function setCalcDays(days) {
+            calcDays = days;
+            document.querySelectorAll('.calc-day-btn').forEach(btn => {
+                if (parseInt(btn.dataset.days) === days) {
+                    btn.className = "calc-day-btn py-2.5 rounded-xl border border-rose-500 bg-rose-600/30 text-rose-300 font-semibold text-sm hover:border-rose-500 transition-all active-day";
+                } else {
+                    btn.className = "calc-day-btn py-2.5 rounded-xl border border-slate-600 bg-slate-700/50 text-white font-semibold text-sm hover:border-rose-500 transition-all";
+                }
+            });
+            calculateBudget();
+        }
+
+        function changePeople(delta) {
+            calcPeople = Math.max(1, Math.min(8, calcPeople + delta));
+            document.getElementById('calc-people').innerText = `${calcPeople}명`;
+            calculateBudget();
+        }
+
+        function calculateBudget() {
+            const hotelCostPerRoom = parseInt(document.getElementById('calc-hotel-tier').value);
+            const foodCostPerPersonPerDay = parseInt(document.getElementById('calc-food-tier').value);
+
+            // Rooms needed: ceil(people / 2)
+            const roomsNeeded = Math.ceil(calcPeople / 2);
+            const totalHotel = hotelCostPerRoom * roomsNeeded * calcDays;
+            
+            // Total food
+            const totalFood = foodCostPerPersonPerDay * calcPeople * (calcDays + 1);
+
+            // Transit: Round-trip Myu-SKY (~2,700 JPY) + subway pass (620 JPY / day)
+            const transitPerPerson = 2700 + (620 * (calcDays + 1));
+            const totalTransit = transitPerPerson * calcPeople;
+
+            // Sightseeing & miscellaneous per person
+            const miscPerPerson = 2000 + (1000 * calcDays);
+            const totalMisc = miscPerPerson * calcPeople;
+
+            const totalJPY = totalHotel + totalFood + totalTransit + totalMisc;
+            const exchangeRate = 9.1; // 100 JPY = approx 910 KRW -> 1 JPY = 9.1 KRW
+            const totalKRW = Math.round(totalJPY * exchangeRate);
+
+            // Update UI
+            document.getElementById('total-jpy').innerText = `¥${totalJPY.toLocaleString()}`;
+            document.getElementById('total-krw').innerText = `약 ${totalKRW.toLocaleString()}원`;
+
+            document.getElementById('breakdown-hotel').innerText = `${totalHotel.toLocaleString()}엔 (${roomsNeeded}객실 × ${calcDays}박)`;
+            document.getElementById('breakdown-food').innerText = `${totalFood.toLocaleString()}엔 (${calcPeople}명 × ${calcDays + 1}일)`;
+            document.getElementById('breakdown-transit').innerText = `${totalTransit.toLocaleString()}엔`;
+            document.getElementById('breakdown-tickets').innerText = `${totalMisc.toLocaleString()}엔`;
+        }
+
+        let toastTimeout;
+        function showToast(message) {
+            const toast = document.getElementById('toast');
+            const text = document.getElementById('toast-text');
+            text.innerText = message;
+
+            toast.classList.remove('translate-y-24', 'opacity-0');
+            toast.classList.add('translate-y-0', 'opacity-100');
+
+            clearTimeout(toastTimeout);
+            toastTimeout = setTimeout(() => {
+                toast.classList.remove('translate-y-0', 'opacity-100');
+                toast.classList.add('translate-y-24', 'opacity-0');
+            }, 2800);
+        }
+
+        function toggleMobileMenu() {
+            const menu = document.getElementById('mobile-menu');
+            const icon = document.getElementById('menu-icon');
+            if (menu.classList.contains('hidden')) {
+                menu.classList.remove('hidden');
+                icon.classList.remove('fa-bars');
+                icon.classList.add('fa-xmark');
+            } else {
+                menu.classList.add('hidden');
+                icon.classList.remove('fa-xmark');
+                icon.classList.add('fa-bars');
+            }
+        }
+    </script>
+</body>
+</html>
